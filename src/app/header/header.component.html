@@ -1,0 +1,23 @@
+<header>
+    <section class="top-navbar">
+        <section class="logo">
+            <a href="#">
+                <img [src]="ImageURL" alt="University Logo">
+            </a>
+        </section>
+        <section class="links">
+            <section class="redirect-links">
+                <ul class="no-bullets">
+                    <li *ngFor="let link of Links">
+                        <a [href]="link.URL">
+                            {{ link.Name }}
+                        </a>
+                    </li>
+                </ul>
+            </section>
+            <section class="btn">
+                <button> Login </button>
+            </section>
+        </section>
+    </section>
+</header>
