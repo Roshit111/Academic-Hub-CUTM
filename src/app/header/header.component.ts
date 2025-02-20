@@ -1,21 +1,58 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { Component, HostListener } from '@angular/core';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, LoginComponent],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  ImageURL = '/assets/logo.png';
+  readonly ImageURL: string = 'assets/logo.png';
 
-  Links = [
-    { URL: "https://www.cutm.ac.in", Name: "Home" },
-    { URL: "https://www.cutm.ac.in", Name: "About" },
-    { URL: "https://www.cutm.ac.in", Name: "Features" },
-    { URL: "https://www.cutm.ac.in", Name: "Services" },
-    { URL: "https://www.cutm.ac.in", Name: "Contact" },
+  navLinks = [
+    { path: '/home', label: 'Home', fragment: 'home' },
+    { path: '/about', label: 'About', fragment: 'about' },
+    { path: '/features', label: 'Features', fragment: 'features' },
+    { path: '/services', label: 'Services', fragment: 'services' },
+    { path: '/contact', label: 'Contact Us', fragment: 'contact' }
   ];
+
+  isMenuOpen = false;
+  isLoginVisible = false;
+
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu(): void {
+    this.isMenuOpen = false;
+  }
+
+  login(): void {
+    this.isLoginVisible = true;
+  }
+
+  closeLoginModal(): void {
+    this.isLoginVisible = false;
+  }
+
+  // Close sidebar when clicking outside, but allow clicks inside the menu
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event): void {
+    const sidebar = document.getElementById('mobileMenu');
+    const toggleButton = document.querySelector('.navbar-toggler');
+
+    if (
+      sidebar &&
+      !sidebar.contains(event.target as Node) &&
+      toggleButton &&
+      !toggleButton.contains(event.target as Node)
+    ) {
+      this.closeMenu();
+    }
+  }
 }

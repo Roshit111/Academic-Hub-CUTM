@@ -1,23 +1,57 @@
-<header>
-    <section class="top-navbar">
-        <section class="logo">
-            <a href="#">
-                <img [src]="ImageURL" alt="University Logo">
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm px-3">
+        <div class="container-fluid px-5">
+            <!-- Logo -->
+            <a class="navbar-brand" routerLink="/">
+                <img [src]="ImageURL" alt="College Logo" width="50px">
             </a>
-        </section>
-        <section class="links">
-            <section class="redirect-links">
-                <ul class="no-bullets">
-                    <li *ngFor="let link of Links">
-                        <a [href]="link.URL">
-                            {{ link.Name }}
+
+            <!-- Navbar Toggler Button (Mobile) -->
+            <button class="navbar-toggler d-md-none" type="button" (click)="toggleMenu()" aria-controls="mobileMenu"
+                [attr.aria-expanded]="isMenuOpen ? 'true' : 'false'" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Desktop Navbar Links -->
+
+            <div class="collapse navbar-collapse d-none d-md-flex justify-content-end">
+                <ul class="navbar-nav d-flex align-items-center">
+                    <li class="nav-item" *ngFor="let link of navLinks">
+                        <a class="nav-link" [routerLink]="link.path" [fragment]="link.fragment"
+                            [routerLinkActive]="['active']" aria-current="page" role="link">
+                            {{ link.label }}
                         </a>
                     </li>
                 </ul>
-            </section>
-            <section class="btn">
-                <button> Login </button>
-            </section>
-        </section>
-    </section>
+
+                <!-- Desktop Login Button -->
+                <button class="btn btn-success ms-3" (click)="login()">Login</button>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Offcanvas Sidenav (Mobile View) -->
+    <div class="offcanvas offcanvas-end" [ngClass]="{ 'show': isMenuOpen }" id="mobileMenu">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Menu</h5>
+            <button type="button" class="btn-close" (click)="closeMenu()" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="navbar-nav">
+                <li class="nav-item" *ngFor="let link of navLinks">
+                    <a class="nav-link" [routerLink]="link.path" [fragment]="link.fragment"
+                        [routerLinkActive]="['active']" aria-current="page" role="link">
+                        {{ link.label }}
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Mobile Login Button -->
+            <button class="btn btn-success ms-3" (click)="login()">Login</button>
+        </div>
+    </div>
+    
+    <app-login [isVisible]="isLoginVisible" (close)="closeLoginModal()"> </app-login>
+
 </header>
