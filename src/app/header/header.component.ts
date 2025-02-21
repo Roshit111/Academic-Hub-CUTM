@@ -1,6 +1,6 @@
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { Component, HostListener } from '@angular/core';
 import { LoginComponent } from '../login/login.component';
 
 @Component({
@@ -11,7 +11,8 @@ import { LoginComponent } from '../login/login.component';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  readonly ImageURL: string = 'assets/logo.png';
+  readonly logoURL = 'assets/logo.png';
+  readonly imageURL = 'assets/favicon.png';
 
   navLinks = [
     { path: '/home', label: 'Home', fragment: 'home' },
@@ -21,38 +22,34 @@ export class HeaderComponent {
     { path: '/contact', label: 'Contact Us', fragment: 'contact' }
   ];
 
-  isMenuOpen = false;
-  isLoginVisible = false;
+  isMobileMenuOpen = false;
+  isLoginModalVisible = false;
 
-  toggleMenu(): void {
-    this.isMenuOpen = !this.isMenuOpen;
+  toggleMobileMenu() { this.isMobileMenuOpen = !this.isMobileMenuOpen; }
+  closeMobileMenu() { this.isMobileMenuOpen = false; }
+  openLoginModal() { this.isLoginModalVisible = true; this.closeMobileMenu(); }
+  closeLoginModal() { this.isLoginModalVisible = false; }
+  trackByFn(index: number, item: { path: string; label: string }): string {
+    return item.path;
   }
 
-  closeMenu(): void {
-    this.isMenuOpen = false;
-  }
-
-  login(): void {
-    this.isLoginVisible = true;
-  }
-
-  closeLoginModal(): void {
-    this.isLoginVisible = false;
-  }
-
-  // Close sidebar when clicking outside, but allow clicks inside the menu
   @HostListener('document:click', ['$event'])
-  onClickOutside(event: Event): void {
-    const sidebar = document.getElementById('mobileMenu');
+  handleOutsideClick(event: Event): void {
+    const mobileMenu = document.getElementById('mobileMenu');
     const toggleButton = document.querySelector('.navbar-toggler');
 
     if (
-      sidebar &&
-      !sidebar.contains(event.target as Node) &&
+      mobileMenu &&
+      !mobileMenu.contains(event.target as Node) &&
       toggleButton &&
       !toggleButton.contains(event.target as Node)
     ) {
-      this.closeMenu();
+      this.closeMobileMenu();
     }
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscapePress(): void {
+    this.closeMobileMenu();
   }
 }

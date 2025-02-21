@@ -1,15 +1,15 @@
-.navbar-nav .nav-link {
+/* Navbar */
+.navbar-collapse .navbar-nav .nav-link {
     position: relative;
-    padding: 8px 15px;
-    text-decoration: none;
-    transition: color 0.3s ease;
+    padding: 8px 12px;
+    transition: color 0.3s ease-in-out;
 }
 
-.navbar-nav .nav-link:hover {
+.navbar-collapse .navbar-nav .nav-link:hover {
     color: #007bff;
 }
 
-.navbar-nav .nav-link::after {
+.navbar-collapse .navbar-nav .nav-link::after {
     content: "";
     display: block;
     width: 0;
@@ -20,18 +20,129 @@
     bottom: -2px;
     left: 50%;
     transform: translateX(-50%);
-    backface-visibility: hidden;
 }
 
-.navbar-nav .nav-link:hover::after {
-    width: calc(100% - 20px);
+.navbar-collapse .navbar-nav .nav-link:hover::after {
+    width: 80%;
 }
 
 .navbar-nav .nav-link.active {
     font-weight: 600;
 }
 
+/* Buttons */
+.btn.custom-btn {
+    width: 80px;
+    color: #007bff;
+    border-radius: 8px;
+    background-color: white;
+    border: 1px solid #007bff;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s ease-in-out;
+    z-index: 1;
+}
+
+.btn.custom-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: #007bff;
+    transition: left 0.4s ease-in-out;
+    z-index: -1;
+}
+
+.btn.custom-btn:hover {
+    color: white;
+}
+
+.btn.custom-btn:hover::after {
+    left: 0;
+}
+
+/* Offcanvas Menu */
 .offcanvas {
-    will-change: transform;
+    width: 300px !important;
+    max-width: 300px;
     transition: transform 0.3s ease-in-out;
+    overflow-y: auto;
+    max-height: 100vh;
+}
+
+/* Remove padding from header */
+.offcanvas-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0 !important;
+}
+
+/* Divider */
+.divider {
+    width: 90%;
+    height: 2px;
+    background-color: #ccc;
+    margin: 0;
+}
+
+/* Remove padding from body */
+.offcanvas-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 0 !important;
+}
+
+.offcanvas-body .navbar-nav .nav-link {
+    font-size: 16px;
+    padding: 6px 0;
+    transition: color 0.3s ease;
+}
+
+.offcanvas-body .navbar-nav .nav-link:hover {
+    color: #007bff;
+}
+
+/* Add backdrop overlay */
+.offcanvas-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.offcanvas.show+.offcanvas-backdrop {
+    opacity: 1;
+}
+
+/* Circular Logo */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.circular-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #007bff;
+    object-fit: cover;
+}
+
+.offcanvas-title {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+}
+
+.offcanvas-body .btn.custom-btn {
+    width: 90%;
 }
