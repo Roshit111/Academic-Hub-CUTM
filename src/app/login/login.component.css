@@ -4,7 +4,11 @@
 }
 
 .modal-sm {
-  max-width: 350px;
+  max-width: 600px;
+}
+
+.modal-content {
+  width: 300px;
 }
 
 .logo {
@@ -20,17 +24,26 @@
   font-size: 18px;
 }
 
+.form-floating label {
+  padding-left: 5px;
+}
+
 .form-floating input {
   border: none;
   font-size: 16px;
   border-radius: 0;
+  padding: 18px 5px 0px 5px;
   background: transparent;
   box-shadow: none !important;
   border-bottom: 2px solid #ccc;
 }
 
-.form-floating input:focus {
-  border-bottom: 2px solid #28a745;
+
+.form-floating input:focus+label,
+.form-floating input:not(:placeholder-shown)+label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
 }
 
 .forgot-password {
@@ -46,11 +59,10 @@
   text-decoration: underline;
 }
 
-/* Password toggle */
 .toggle-password {
   position: absolute;
   right: 10px;
-  top: 50%;
+  top: 60%;
   transform: translateY(-50%);
   cursor: pointer;
   font-size: 18px;
@@ -59,4 +71,10 @@
 
 .toggle-password:hover {
   color: #000;
+}
+
+.modal[style*="display: block"] {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
 }
