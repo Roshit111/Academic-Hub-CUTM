@@ -11,19 +11,25 @@ import { FeaturesComponent } from '../features/features.component';
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [HeaderComponent, HomeComponent, AboutComponent, ServicesComponent, FeaturesComponent, ContactComponent, FooterComponent],
+  imports: [
+    HeaderComponent, HomeComponent, AboutComponent,
+    ServicesComponent, FeaturesComponent, ContactComponent, FooterComponent
+  ],
   templateUrl: './landing-page.component.html',
-  styleUrl: './landing-page.component.css'
+  styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements AfterViewInit {
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngAfterViewInit(): void {
     this.route.fragment.subscribe(fragment => {
       if (fragment) {
         const element = document.getElementById(fragment);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          const yOffset = -100;
+          const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+
+          window.scrollTo({ top: y, behavior: 'smooth' });
         }
       }
     });

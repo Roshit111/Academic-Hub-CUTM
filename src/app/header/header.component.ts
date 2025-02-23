@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
@@ -9,10 +9,12 @@ import { LoginComponent } from '../login/login.component';
   imports: [CommonModule, RouterModule, LoginComponent],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
   readonly logoURL = 'assets/logo.png';
   readonly imageURL = 'assets/favicon.png';
+  readonly titleName = 'CUTM || Academic Hub';
 
   navLinks = [
     { path: '/home', label: 'Home', fragment: 'home' },
@@ -22,15 +24,28 @@ export class HeaderComponent {
     { path: '/contact', label: 'Contact Us', fragment: 'contact' }
   ];
 
-  isMobileMenuOpen = false;
-  isLoginModalVisible = false;
+  isMobileMenuOpen: boolean = false;
+  isLoginModalVisible: boolean = false;
 
-  toggleMobileMenu() { this.isMobileMenuOpen = !this.isMobileMenuOpen; }
-  closeMobileMenu() { this.isMobileMenuOpen = false; }
-  openLoginModal() { this.isLoginModalVisible = true; this.closeMobileMenu(); }
-  closeLoginModal() { this.isLoginModalVisible = false; }
-  trackByFn(index: number, item: { path: string; label: string }): string {
-    return item.path;
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  closeMobileMenu(): void {
+    this.isMobileMenuOpen = false;
+  }
+
+  openLoginModal(): void {
+    this.isLoginModalVisible = true;
+    this.closeMobileMenu();
+  }
+
+  closeLoginModal(): void {
+    this.isLoginModalVisible = false;
+  }
+
+  trackByFn(index: number, item: any): number {
+    return index;
   }
 
   @HostListener('document:click', ['$event'])
@@ -39,9 +54,8 @@ export class HeaderComponent {
     const toggleButton = document.querySelector('.navbar-toggler');
 
     if (
-      mobileMenu &&
+      mobileMenu && toggleButton &&
       !mobileMenu.contains(event.target as Node) &&
-      toggleButton &&
       !toggleButton.contains(event.target as Node)
     ) {
       this.closeMobileMenu();

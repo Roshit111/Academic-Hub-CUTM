@@ -13,9 +13,9 @@
 
             <div class="collapse navbar-collapse justify-content-end" *ngIf="!isMobileMenuOpen">
                 <ul class="navbar-nav d-flex align-items-center">
-                    <li class="nav-item" *ngFor="let link of navLinks; trackBy: trackByFn" (click)="closeMobileMenu()">
+                    <li class="nav-item" *ngFor="let link of navLinks; trackBy: trackByFn">
                         <a class="nav-link" [routerLink]="link.path" [fragment]="link.fragment"
-                            routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
+                            routerLinkActive="active" (click)="closeMobileMenu()">
                             {{ link.label }}
                         </a>
                     </li>
@@ -30,19 +30,20 @@
             <div class="logo-container">
                 <img [src]="imageURL" alt="College Logo" class="circular-logo" loading="lazy">
             </div>
-            <h5 class="offcanvas-title">CUTM Academic Hub</h5>
+            <h5 class="offcanvas-title">{{ titleName }}</h5>
             <hr class="divider">
         </div>
 
         <div class="offcanvas-body">
             <ul class="navbar-nav text-center">
-                <li class="nav-item" *ngFor="let link of navLinks; trackBy: trackByFn" (click)="closeMobileMenu()">
-                    <a class="nav-link" [routerLink]="link.path" [fragment]="link.fragment" routerLinkActive="active">
+                <li class="nav-item" *ngFor="let link of navLinks; trackBy: trackByFn">
+                    <a class="nav-link" [routerLink]="link.path" [fragment]="link.fragment" routerLinkActive="active"
+                        (click)="closeMobileMenu()">
                         {{ link.label }}
                     </a>
                 </li>
             </ul>
-            <button class="btn custom-btn mt-3" (click)="openLoginModal()">Login</button>
+            <button class="btn custom-btn mt-2" (click)="openLoginModal()">Login</button>
         </div>
     </div>
 
