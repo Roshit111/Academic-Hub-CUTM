@@ -16,7 +16,7 @@ export class HeaderComponent {
   readonly imageURL = 'assets/favicon.png';
   readonly titleName = 'CUTM || Academic Hub';
 
-  navLinks = [
+  readonly navLinks = [
     { path: '/home', label: 'Home', fragment: 'home' },
     { path: '/about', label: 'About', fragment: 'about' },
     { path: '/features', label: 'Features', fragment: 'features' },
@@ -24,8 +24,8 @@ export class HeaderComponent {
     { path: '/contact', label: 'Contact Us', fragment: 'contact' }
   ];
 
-  isMobileMenuOpen: boolean = false;
-  isLoginModalVisible: boolean = false;
+  isMobileMenuOpen = false;
+  isLoginModalVisible = false;
 
   toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
@@ -36,16 +36,16 @@ export class HeaderComponent {
   }
 
   openLoginModal(): void {
-    this.isLoginModalVisible = true;
     this.closeMobileMenu();
+    this.isLoginModalVisible = true;
   }
 
   closeLoginModal(): void {
     this.isLoginModalVisible = false;
   }
 
-  trackByFn(index: number, item: any): number {
-    return index;
+  trackByFn(index: number, item: any): string {
+    return item.path;
   }
 
   @HostListener('document:click', ['$event'])

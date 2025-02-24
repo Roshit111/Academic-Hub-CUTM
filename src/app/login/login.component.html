@@ -1,24 +1,41 @@
-<div class="modal fade" [class.show]="isVisible" [style.display]="isVisible ? 'block' : 'none'" (click)="closeModal()"
-    role="dialog" aria-labelledby="modalTitle" aria-hidden="!isVisible" tabindex="-1">
+<div class="modal fade" [class.show]="isVisible" [style.display]="isVisible ? 'block' : 'none'" (click)="onClose()"
+    role="dialog" aria-labelledby="modalTitle" [attr.aria-hidden]="!isVisible ? 'true' : 'false'" tabindex="-1">
+
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content p-4" (click)="$event.stopPropagation()">
-            <div class="text-center"><img [src]="ImageURL" alt="Logo" class="img-fluid logo"></div>
-            <h2 id="modalTitle" class="modal-title text-center mt-3">{{ BrowserName }}</h2>
+            <p *ngIf="validationError" class="text-danger text-center" aria-live="polite">
+                {{ validationError }}
+            </p>
+
+            <div class="text-center">
+                <img [src]="imageUrl" alt="CUTM Logo" class="img-fluid logo">
+            </div>
+
+            <h2 id="modalTitle" class="modal-title text-center mt-1">
+                CUTM || Academic Hub
+            </h2>
+            <h2 class="modal-title text-center mt-1">
+                {{ mode === 'login' ? 'Login' : 'Forgot Password' }}
+            </h2>
             <hr class="separator">
+
             <div class="form-group form-floating">
                 <input type="text" id="userId" [(ngModel)]="userId" class="form-control" placeholder=" " required>
                 <label for="userId">User ID</label>
             </div>
-            <div class="form-group form-floating position-relative">
-                <input [type]="showPassword ? 'text' : 'password'" id="password" [(ngModel)]="password"
-                    class="form-control" placeholder=" " required>
+
+            <div class="form-group form-floating" *ngIf="mode === 'login'">
+                <input type="password" id="password" [(ngModel)]="password" class="form-control" placeholder=" "
+                    required>
                 <label for="password">Password</label>
-                <i class="fa toggle-password" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"
-                    (click)="togglePasswordVisibility()"></i>
             </div>
-            <p *ngIf="errorMessage" class="text-danger text-center">{{ errorMessage }}</p>
-            <a href="#" class="forgot-password">Forgot Password?</a>
-            <button type="button" class="btn btn-primary w-100" (click)="login()">Login</button>
+
+            <a *ngIf="mode === 'login'" class="forgot-password" (click)="switchMode('forgot')">Forgot Password?</a>
+            <a *ngIf="mode === 'forgot'" class="forgot-password" (click)="switchMode('login')">Back to Login</a>
+
+            <button type="button" class="btn btn-primary w-100" (click)="submitForm()">
+                {{ mode === 'login' ? 'Login' : 'Reset Password' }}
+            </button>
         </div>
     </div>
 </div>

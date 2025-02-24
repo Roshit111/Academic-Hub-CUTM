@@ -1,7 +1,7 @@
 <header class="sticky-top">
-    <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm px-3">
+    <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm px-3" role="navigation">
         <div class="container-fluid px-5">
-            <a class="navbar-brand" routerLink="/">
+            <a class="navbar-brand" routerLink="/home" fragment="home">
                 <img [src]="logoURL" alt="College Logo" width="50">
             </a>
 
@@ -11,11 +11,11 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse justify-content-end" *ngIf="!isMobileMenuOpen">
+            <div class="collapse navbar-collapse justify-content-end" [class.d-none]="isMobileMenuOpen">
                 <ul class="navbar-nav d-flex align-items-center">
                     <li class="nav-item" *ngFor="let link of navLinks; trackBy: trackByFn">
                         <a class="nav-link" [routerLink]="link.path" [fragment]="link.fragment"
-                            routerLinkActive="active" (click)="closeMobileMenu()">
+                            routerLinkActive="active" role="menuitem">
                             {{ link.label }}
                         </a>
                     </li>
@@ -25,6 +25,7 @@
         </div>
     </nav>
 
+    <!-- Offcanvas Mobile Menu -->
     <div class="offcanvas offcanvas-end" [ngClass]="{ 'show': isMobileMenuOpen }" id="mobileMenu">
         <div class="offcanvas-header">
             <div class="logo-container">
@@ -38,7 +39,7 @@
             <ul class="navbar-nav text-center">
                 <li class="nav-item" *ngFor="let link of navLinks; trackBy: trackByFn">
                     <a class="nav-link" [routerLink]="link.path" [fragment]="link.fragment" routerLinkActive="active"
-                        (click)="closeMobileMenu()">
+                        role="menuitem">
                         {{ link.label }}
                     </a>
                 </li>
@@ -47,5 +48,6 @@
         </div>
     </div>
 
+    <!-- Login Modal -->
     <app-login *ngIf="isLoginModalVisible" [isVisible]="isLoginModalVisible" (close)="closeLoginModal()"></app-login>
 </header>

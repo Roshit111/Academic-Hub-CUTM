@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, HostListener, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, HostListener, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -11,43 +10,53 @@ import { ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./login.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent implements OnChanges {
+export class LoginComponent {
   @Input() isVisible: boolean = false;
   @Output() close = new EventEmitter<void>();
 
-  readonly ImageURL: string = 'assets/logo.png';
-  BrowserName: string = 'Login CUTM Academic Hub';
+  readonly imageUrl: string = 'assets/logo.png';
+  mode: 'login' | 'forgot' = 'login';
   userId: string = '';
   password: string = '';
-  showPassword: boolean = false;
-  errorMessage: string = '';
+  validationError: string = '';
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['isVisible']?.currentValue) {
-      setTimeout(() => document.getElementById('userId')?.focus(), 100);
+  constructor(private cdr: ChangeDetectorRef) { }
+
+  submitForm() {
+    if (this.mode === 'login' && (!this.userId || !this.password)) {
+      this.validationError = 'Please enter User ID and Password.';
+    } else if (this.mode === 'forgot' && !this.userId) {
+      this.validationError = 'Please enter User ID.';
+    } else {
+      this.validationError = '';
+      console.log(`${this.mode === 'login' ? 'Logging in' : 'Resetting password'} for User:`, this.userId);
+    }
+    this.cdr.detectChanges();
+
+    if (this.validationError) {
+      setTimeout(() => {
+        this.validationError = '';
+        this.cdr.detectChanges();
+      }, 1000);
     }
   }
 
-  login() {
-    if (!this.userId || !this.password) {
-      this.errorMessage = 'Please enter both User ID and Password.';
-      return;
+  switchMode(newMode: 'login' | 'forgot') {
+    this.mode = newMode;
+    this.validationError = '';
+    this.cdr.detectChanges();
+  }
+
+  onClose() {
+    if (this.isVisible) {
+      this.isVisible = false;
+      this.close.emit();
+      this.cdr.detectChanges();
     }
-    this.errorMessage = '';
-    console.log("User:", this.userId, "Password:", this.password);
-  }
-
-  closeModal() {
-    this.isVisible = false;
-    this.close.emit();
-  }
-
-  togglePasswordVisibility() {
-    this.showPassword = !this.showPassword;
   }
 
   @HostListener('document:keydown.escape', ['$event'])
-  onEscapePress(event: KeyboardEvent) {
-    if (this.isVisible) this.closeModal();
+  onEscapePress() {
+    this.onClose();
   }
 }
