@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MenuItemsService } from '../profile.service';
+import { SideMenuService } from '../side-menu.service';
+import { UserInfoService } from '../user-info.service';
 import { Router, RouterModule } from '@angular/router';
-import { UserInfoService } from '../../Services/user-info.service';
+import { AuthService } from '../../Services/auth.service';
 import { UserProfile } from '../../Services/model/user-profile.model';
 import { HeaderComponent } from '../../Shared/header/header.component';
 import { navigationMenu } from '../../Services/model/navigation-item.model';
 import { SideNavbarComponent } from '../../Shared/side-navbar/side-navbar.component';
 import { ProfileCardComponent } from '../../Shared/profile-card/profile-card.component';
-import { AuthService } from '../../Services/auth.service';
-import { MenuItemsService } from '../profile.service';
-import { SideMenuService } from '../side-menu.service';
 
 @Component({
   selector: 'app-student-page',
@@ -40,10 +40,10 @@ export class StudentPageComponent {
 
   constructor(
     private router: Router,
+    private authService: AuthService,
     private userInfoService: UserInfoService,
     private menuItemsService: MenuItemsService,
-    private navigationMenuService: SideMenuService,
-    private authService: AuthService
+    private navigationMenuService: SideMenuService
   ) {}
 
   ngOnInit(): void {

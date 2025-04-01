@@ -7,6 +7,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
 
+interface NavLink {
+  path: string;
+  label: string;
+  fragment: string;
+}
+
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -16,11 +22,11 @@ import { LoginComponent } from '../login/login.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  readonly logoURL = 'assets/logo.png';
-  readonly imageURL = 'assets/favicon.png';
-  readonly titleName = 'CUTM || Academic Hub';
+  readonly logoURL = 'assets/Images/logo.png';
+  readonly imageURL = 'assets/Images/favicon.png';
+  readonly titleName = 'CUTM || Attendance System';
 
-  readonly navLinks = [
+  readonly navLinks: NavLink[] = [
     { path: '/home', label: 'Home', fragment: 'home' },
     { path: '/about', label: 'About', fragment: 'about' },
     { path: '/features', label: 'Features', fragment: 'features' },
@@ -48,7 +54,7 @@ export class HeaderComponent {
     this.isLoginModalVisible = false;
   }
 
-  trackByFn(item: any): string {
+  trackByFn(index: number, item: NavLink): string {
     return item.path;
   }
 
@@ -67,7 +73,7 @@ export class HeaderComponent {
     }
   }
 
-  @HostListener('document:keydown.escape', ['$event'])
+  @HostListener('document:keydown.escape')
   handleEscapePress(): void {
     this.closeMobileMenu();
   }

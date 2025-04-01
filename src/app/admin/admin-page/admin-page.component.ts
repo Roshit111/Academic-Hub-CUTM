@@ -4,12 +4,12 @@ import { MenuItemsService } from '../profile.service';
 import { SideMenuService } from '../side-menu.service';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../Services/auth.service';
-import { UserInfoService } from '../../Services/user-info.service';
 import { UserProfile } from '../../Services/model/user-profile.model';
 import { HeaderComponent } from '../../Shared/header/header.component';
 import { navigationMenu } from '../../Services/model/navigation-item.model';
 import { SideNavbarComponent } from '../../Shared/side-navbar/side-navbar.component';
 import { ProfileCardComponent } from '../../Shared/profile-card/profile-card.component';
+import { UserInfoService } from '../user-info.service';
 
 @Component({
   selector: 'app-admin-page',
