@@ -1,0 +1,20 @@
+.footer {
+    width: 100%;
+    padding: 0 5px;
+    background-color: #000;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    font-family: 'Poppins', sans-serif;
+}
+
+.footer small {
+    color: #a2a4f3 !important;
+}
+
+.footer-link,
+.footer-guide span {
+    color: #81cefa !important;
+}
+
+.divider {
+    margin: 0 5px;
+}

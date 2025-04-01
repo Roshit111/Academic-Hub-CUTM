@@ -1,0 +1,42 @@
+<div class="user-profile-container shadow-lg">
+  <div class="user-profile-card bg-dark text-white" #profileCardElement>
+    <div class="user-profile-header p-3">
+      <p class="user-name" aria-label="User Name">
+        <i class="fas fa-user-circle"></i> {{ profile.userName }}
+      </p>
+      <p class="user-info" aria-label="User Course and Semester">
+        <i class="fas fa-graduation-cap font-icons"></i>
+        {{ profile.course }} {{ profile.semester }}
+      </p>
+      <p class="user-id user-info" aria-label="User ID">
+        <i class="fas fa-bookmark font-icons"></i> {{ profile.studentId }}
+      </p>
+      <hr class="bg-light" />
+      <p class="user-info" aria-label="User Institution">
+        <i class="fas fa-university font-icons"></i> {{ profile.institution }}
+      </p>
+    </div>
+    <div class="user-profile-menu bg-light">
+      <ng-container *ngFor="let item of profileMenuItems">
+        <a
+          class="user-menu-item d-block text-dark"
+          [routerLink]="item.path"
+          [fragment]="item.fragment"
+          [attr.aria-label]="item.label"
+        >
+          <i [class]="item.icon"></i> {{ item.label }}
+        </a>
+      </ng-container>
+      <hr class="break" />
+      <a
+        class="user-menu-item logout-btn d-block"
+        (click)="onLogout()"
+        #logoutButtonElement
+        role="button"
+        aria-label="Logout"
+      >
+        <i class="fas fa-power-off"></i> Logout
+      </a>
+    </div>
+  </div>
+</div>

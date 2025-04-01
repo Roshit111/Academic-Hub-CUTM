@@ -1,0 +1,18 @@
+<div class="card-container d-flex flex-wrap justify-content-start">
+  <div *ngFor="let item of featureCard" class="card text-center">
+    <a
+      class="text-decoration-none text-dark"
+      [routerLink]="item.path"
+      [fragment]="item.fragment"
+      [attr.title]="item.label"
+      role="menuitem"
+      [attr.aria-label]="item.label"
+      tabindex="0"
+    >
+      <div class="icon-container">
+        <i [ngClass]="item.icon" class="text-primary" aria-hidden="true"></i>
+      </div>
+      <div class="card-label">{{ item.label }}</div>
+    </a>
+  </div>
+</div>

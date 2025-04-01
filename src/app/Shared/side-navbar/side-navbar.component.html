@@ -1,0 +1,29 @@
+<div
+  class="sidebar"
+  [ngClass]="{ 'sidebar-expanded': isSidebarExpanded }"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+>
+  <div class="sidebar-header">
+    <img class="profile-img" [src]="userImage" alt="User Profile" />
+    <div class="sidebar-title" *ngIf="isSidebarExpanded">
+      {{ navbarHeader }}
+    </div>
+  </div>
+  <ul class="sidebar-menu">
+    <li *ngFor="let item of menuItems" class="sidebar-item">
+      <a
+        class="sidebar-link"
+        [routerLink]="[item.path]"
+        routerLinkActive="active"
+        [fragment]="item.fragment"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i class="sidebar-icon material-icons-outlined" [ngClass]="item.icon"></i>
+        <span class="sidebar-text" *ngIf="isSidebarExpanded">{{
+          item.label
+        }}</span>
+      </a>
+    </li>
+  </ul>
+</div>

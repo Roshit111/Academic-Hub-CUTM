@@ -1,0 +1,83 @@
+<div
+  class="modal fade"
+  [class.show]="isVisible"
+  [style.display]="isVisible ? 'block' : 'none'"
+  (click)="onClose()"
+  role="dialog"
+  aria-labelledby="modalTitle"
+  [attr.aria-hidden]="!isVisible ? 'true' : 'false'"
+  tabindex="-1"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content p-4" (click)="$event.stopPropagation()">
+      <p
+        *ngIf="validationError"
+        class="text-danger text-center"
+        aria-live="polite"
+      >
+        {{ validationError }}
+      </p>
+
+      <div class="text-center">
+        <img [src]="imageUrl" alt="CUTM Logo" class="img-fluid logo" />
+      </div>
+
+      <h2 id="modalTitle" class="modal-title text-center mt-1">
+        CUTM || Smart Attendance
+      </h2>
+      <h2 class="modal-title text-center mt-1">
+        {{ mode === "login" ? "Login" : "Forgot Password" }}
+      </h2>
+      <hr class="separator" />
+
+      <div class="form-group form-floating">
+        <input
+          type="text"
+          id="userId"
+          [(ngModel)]="userId"
+          class="form-control"
+          placeholder=" "
+          required
+        />
+        <label for="userId">User ID</label>
+      </div>
+
+      <div class="form-group form-floating" *ngIf="mode === 'login'">
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="password"
+          class="form-control"
+          placeholder=" "
+          required
+          autocomplete="new-password"
+        />
+        <label for="password">Password</label>
+      </div>
+
+      <a
+        *ngIf="mode === 'login'"
+        class="forgot-password"
+        (click)="switchMode('forgot')"
+      >
+        Forgot Password?
+      </a>
+      <a
+        *ngIf="mode === 'forgot'"
+        class="forgot-password"
+        (click)="switchMode('login')"
+      >
+        Back to Login
+      </a>
+
+      <button
+        type="button"
+        class="btn btn-primary w-100"
+        [disabled]="mode === 'login' ? !userId || !password : !userId"
+        (click)="submitForm()"
+      >
+        {{ mode === "login" ? "Login" : "Reset Password" }}
+      </button>
+    </div>
+  </div>
+</div>

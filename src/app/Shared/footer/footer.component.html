@@ -1,0 +1,30 @@
+<footer class="footer bg-dark text-white text-center py-1">
+    <div class="container">
+      <!-- Project Name and Copyright -->
+      <section class="mb-1">
+        <small>&copy; {{ currentYear }} {{ projectName }}. All rights reserved.</small>
+      </section>
+  
+      <!-- Developer Credits -->
+      <nav aria-label="Developers">
+        <small>Developed by:</small>
+        <span *ngFor="let developer of developerDetails">
+          <a
+            [href]="developer.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-link text-decoration-none mb-1"
+          >
+            {{ developer.name }}
+          </a>
+          <span class="footer-link divider" *ngIf="!isLastDeveloper(developer)">||</span>
+        </span>
+      </nav>
+  
+      <!-- Guide Name -->
+      <section class="footer-guide">
+        <small>Guided by: <span class="text-primary">{{ guideName }}</span></small>
+      </section>
+    </div>
+  </footer>
+  

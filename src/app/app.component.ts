@@ -1,13 +1,23 @@
 import { Component } from '@angular/core';
-import { LandingPageComponent } from './landing-page/landing-page.component';
+import { RouterOutlet } from '@angular/router';
+import { TransitionService } from './Services/transition.service';
+import { TitleAnimateService } from './Services/title-animate.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [LandingPageComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'Academic-Hub-CUTM';
+  constructor(
+    private titleAnimateService: TitleAnimateService,
+    private transitionService: TransitionService
+  ) {}
+
+  ngOnInit(): void {
+    this.transitionService.init();
+    this.titleAnimateService.init();
+  }
 }

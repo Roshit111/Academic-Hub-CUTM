@@ -1,0 +1,28 @@
+<app-header
+  [isSidebarExpanded]="isSidebarExpanded"
+  (sidebarStateChange)="onSidebarStateChange($event)"
+  (profileCardToggle)="onProfileCardToggle()"
+  (manualToggle)="onManualToggle($event)"
+></app-header>
+
+<app-profile-card
+  *ngIf="isProfileCardVisible"
+  [profile]="userProfile"
+  [profileMenuItems]="profileMenuItems"
+  (logout)="confirmLogout()"
+  (closeCard)="onProfileCardToggle()"
+></app-profile-card>
+
+<app-side-navbar
+  [userImage]="navImage"
+  [menuItems]="menuItems"
+  [navbarHeader]="navTitle"
+  [isManualToggle]="isManualToggle"
+  [isSidebarExpanded]="isSidebarExpanded"
+  (sidebarStateChange)="onSidebarStateChange($event)"
+></app-side-navbar>
+
+<!-- Main Content -->
+<div class="main-content" [ngClass]="{ 'content-expanded': isSidebarExpanded }">
+  <router-outlet></router-outlet>
+</div>
